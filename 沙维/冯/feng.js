@@ -31,14 +31,8 @@ function sign() {
   const timestamp = Date.parse(new Date())
   const signurl = `url=/v1/attendance/userSignIn$time=${timestamp}`
   const url = { url: `https://beta-api.feng.com/v1/attendance/userSignIn?time=${timestamp}`, headers: {}, body: {} }
-  url.headers['Host'] = 'beta-api.feng.com'
-  url.headers['Origin'] = 'https://www.feng.com'
-  url.headers['Referer'] = 'https://www.feng.com/'
-  url.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
-  url.headers['Accept'] = 'application/json, text/plain, */*'
-  url.headers['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.4 Safari/605.1.15'
   url.headers['X-Access-Token'] = getToken()
-  url.headers['X-Request-Id'] = encrypt(signurl)
+  url.headers['X-Request-Env'] = encrypt(signurl)
   chavy.post(url, (error, response, data) => {
     chavy.log(`${cookieName}, signdata: ${data}`)
     if (data) {
@@ -77,7 +71,7 @@ function getexp(signResult) {
   url.headers['Accept-Language'] = 'zh-cn'
   url.headers['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.4 Safari/605.1.15'
   url.headers['X-Access-Token'] = getToken()
-  url.headers['X-Request-Id'] = encrypt(signurl)
+  url.headers['X-Request-Env'] = encrypt(signurl)
   chavy.get(url, (error, response, data) => {
     chavy.log(`${cookieName}, getexpdata: ${data}`)
     let result = JSON.parse(data)
